@@ -77,7 +77,7 @@ CXXFLAGS += -Wno-unused-local-typedefs
 CXXFLAGS += -Wuninitialized -Wmaybe-uninitialized
 CXXFLAGS += -Werror=return-type
 CXXFLAGS += -I./source/game -I./source/angelscript/include
-CXXFLAGS += -I/usr/include/freetype2 -isystem./source/glfw/include
+CXXFLAGS += -I/usr/include/freetype2
 CXXFLAGS += -I./source/sound/include
 CXXFLAGS += -I./source/as_addons/include -I./source/os/include
 CXXFLAGS += -I./source/libircclient/include
@@ -111,6 +111,7 @@ else
 		LDFLAGS += -Lsource/lib/lin$(ARCH)
 	endif
 	LDFLAGS += -lGL -lGLU -lX11 -lXrandr -lXxf86vm -lXi -lopenal -lcurl
+	LDFLAGS += -lglfw
 
 endif
 
@@ -120,7 +121,6 @@ LDFLAGS += -lm -lfreetype
 LDFLAGS += -lvorbisfile
 
 LIB_FILES += $(LIBDIR)/libangelscript.a
-LIB_FILES += $(LIBDIR)/libglfw3.a
 LIB_FILES += $(LIBDIR)/libsound.a
 LIB_FILES += $(LIBDIR)/libas_addons.a
 LIB_FILES += $(LIBDIR)/libircclient.a
@@ -352,9 +352,6 @@ version:
 $(LIBDIR)/libangelscript.a:
 	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) angelscript
 
-$(LIBDIR)/libglfw3.a:
-	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) glfw
-
 $(LIBDIR)/libsound.a:
 	$(MAKE) -f ./source/sound/gcc/Makefile compile
 
@@ -378,11 +375,6 @@ clean_angelscript:
 	rm -f $(LIBDIR)/libangelscript.a
 angelscript: clean_angelscript
 	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) angelscript
-
-clean_glfw:
-	rm -f $(LIBDIR)/libglfw3.a
-glfw:
-	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) glfw
 
 clean_sound:
 	rm -f $(LIBDIR)/libsound.a

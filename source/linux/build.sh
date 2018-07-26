@@ -1,20 +1,6 @@
 #!/bin/bash
 #Builds everything needed to get binaries
 
-build_glfw() {
-	cd source/glfw
-	rm CMakeCache.txt
-	rm -r CMakeFiles
-
-    if [[ "$(uname)" == "Darwin" ]]; then
-        export CC=/usr/bin/gcc
-    fi
-    CFLAGS="${ARCHFLAGS}" cmake -DCMAKE_AR=$(which $AR) -DCMAKE_RANLIB=$(which $RANLIB) .
-	CFLAGS="${ARCHFLAGS}" make glfw
-	cd ../../
-	cp source/glfw/src/libglfw3.a $ODIR/libglfw3.a
-}
-
 build_angelscript() {
 	cd source/angelscript/projects/gnuc
 	make clean
@@ -83,15 +69,11 @@ for arg in $args; do
 			mkdir -p "$ODIR"
 		;;
 		libs)
-			build_glfw
 			build_angelscript
 			build_breakpad
 		;;
 		angelscript)
 			build_angelscript
-		;;
-		glfw)
-			build_glfw
 		;;
 		breakpad)
 			build_breakpad
