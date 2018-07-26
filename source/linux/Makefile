@@ -355,9 +355,6 @@ $(LIBDIR)/libangelscript.a:
 $(LIBDIR)/libglfw3.a:
 	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) glfw
 
-#$(LIBDIR)/libbreakpad_client.a:
-	#./source/linux/build.sh $(ARCH) $(BUILDTYPE) breakpad
-
 $(LIBDIR)/libsound.a:
 	$(MAKE) -f ./source/sound/gcc/Makefile compile
 
@@ -386,11 +383,6 @@ clean_glfw:
 	rm -f $(LIBDIR)/libglfw3.a
 glfw:
 	bash source/linux/build.sh $(ARCH) $(BUILDTYPE) glfw
-
-#clean_breakpad:
-	#rm -f $(LIBDIR)/libbreakpad_client.a
-#breakpad:
-	#./source/linux/build.sh $(ARCH) $(BUILDTYPE) breakpad
 
 clean_sound:
 	rm -f $(LIBDIR)/libsound.a
