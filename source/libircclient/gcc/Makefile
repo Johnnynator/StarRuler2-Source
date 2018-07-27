@@ -51,10 +51,6 @@ else
 endif
 endif
 
-ifndef CC
-	CC = g++
-endif
-
 CXXFLAGS += -I./source/libircclient/include -I./source/libircclient/source
 CXXFLAGS += -DENABLE_THREADS -DHAVE_LOCALTIME_R
 
@@ -77,13 +73,13 @@ compile: $(DEP_FILES) $(BINDIR)/$(BIN)
 #Dependency files to take care of header changes
 $(OBJDIR)/%.d: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CXXFLAGS) -MM -MT "$(@:.d=.o)" $< >> $@
+	@$(CXX) $(CXXFLAGS) -MM -MT "$(@:.d=.o)" $< >> $@
 
 #Object files are compiled separately
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo $<
-	@$(CC) $(CXXFLAGS) $< -c -o $@
+	@$(CXX) $(CXXFLAGS) $< -c -o $@
 
 #Complete binary compile
 $(BINDIR)/$(BIN): $(OBJ_FILES)

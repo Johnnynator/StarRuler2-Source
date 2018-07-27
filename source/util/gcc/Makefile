@@ -56,10 +56,6 @@ ifeq ($(UNAME), Darwin)
 	LDFLAGS += -L/usr/local/Cellar/libpng/1.6.12/lib
 endif
 
-ifndef CC
-	CC = g++
-endif
-
 CXXFLAGS += -std=c++11
 CXXFLAGS += -Wall -Wno-invalid-offsetof -Wno-switch -Wno-reorder
 CXXFLAGS += -I./source/util/include -I./source/util/source
@@ -82,13 +78,13 @@ compile: $(DEP_FILES) $(BINDIR)/$(BIN)
 #Dependency files to take care of header changes
 $(OBJDIR)/%.d: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@$(CC) $(CXXFLAGS) -MM -MT "$(@:.d=.o)" $< >> $@
+	@$(CXX) $(CXXFLAGS) -MM -MT "$(@:.d=.o)" $< >> $@
 
 #Object files are compiled separately
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo $<
-	@$(CC) $(CXXFLAGS) $< -c -o $@
+	@$(CXX) $(CXXFLAGS) $< -c -o $@
 
 #Complete binary compile
 $(BINDIR)/$(BIN): $(OBJ_FILES)
